@@ -1,0 +1,42 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Random Num App</title>
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script>
+
+        // Firstly load all parameters
+        $(document ).ready(function() {
+            $('#dollar').html(<%=Currency[0]['currencyNum']%>);
+            $('#euro').html(<%=Currency[1]['currencyNum']%>);
+            $('#gold').html(<%=Currency[2]['currencyNum']%>);
+        });
+        // Connect the socket
+        var socket = io('http://localhost:8080');
+
+        // asynchronous and parallel current data retrieval
+        
+        // update-valueDollar event
+        socket.on('update-valueDollar', function (value) {
+            $('#dollar').html(value);
+        });
+
+        // update-valueEuro event
+        socket.on('update-valueEuro', function (value) {
+            $('#euro').html(value);
+        });
+
+        // update-valueGold event
+        socket.on('update-valueGold', function (value) {
+            $('#gold').html(value);
+        });
+    </script>
+</head>
+<body>
+<p>Currencys:</p>
+    <div><a><%=Currency[0]['name']%> :</a><a id="dollar"></a></div>
+    <div><a><%=Currency[1]['name']%> :</a><a id="euro"></a></div>
+    <div><a><%=Currency[2]['name']%> :</a><a id="gold"></a></div>
+</body>
+</html>
